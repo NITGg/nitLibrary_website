@@ -1,0 +1,49 @@
+{
+  "title": "Privacy Policy",
+  "subtitle": "We value your privacy and are committed to protecting your personal data. This privacy policy explains how we collect, use, and protect your information when using the app.",
+  "effectiveDate": "Effective Date: [28/02/2025]",
+  "welcome": "Welcome to Investor! We value your privacy greatly and are committed to protecting your personal data. This privacy policy explains how your information is collected, used, and protected when you use the app.",
+  "section1": {
+    "title": "1. Information We Collect",
+    "subtitle": "We may collect the following data:",
+    "items": [
+      "Personal Information: Name, email, phone number, payment details.",
+      "Transaction Data: Purchases, point-back earnings, rewards history.",
+      "Device and Usage Data: IP address, in-app interactions, preferences."
+    ]
+  },
+  "section2": {
+    "title": "2. How We Use Your Information",
+    "subtitle": "We use your data to:",
+    "items": [
+      "Process rewards and purchase transactions.",
+      "Improve user experience and app performance.",
+      "Send promotional offers and important updates.",
+      "Prevent fraud and enhance security."
+    ]
+  },
+  "section3": {
+    "title": "3. Sharing Your Information",
+    "subtitle": "We do not sell or rent your personal data. However, we may share information with:",
+    "items": [
+      "Partner brands to process rewards.",
+      "Service providers who help improve app performance.",
+      "Legal authorities when required by law."
+    ]
+  },
+  "section4": {
+    "title": "4. Data Security",
+    "content": "We implement strict security measures to protect your information from unauthorized access or misuse."
+  },
+  "section5": {
+    "title": "5. Your Rights",
+    "items": [
+      "You can access, modify, or delete your personal data.",
+      "You can unsubscribe from promotional messages at any time."
+    ]
+  },
+  "section6": {
+    "title": "6. Policy Updates",
+    "content": "We may update this privacy policy from time to time. Continued use of the app after updates means acceptance of the new terms."
+  }
+}

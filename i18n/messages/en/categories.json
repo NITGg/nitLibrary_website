@@ -1,0 +1,11 @@
+{
+  "hero": {
+    "title": "Our Categories at Your Fingertips",
+    "description": "We provide all printing, copying, booklet preparation, and office supplies services with the highest quality."
+  },
+  "cards": {
+    "title": "Categories",
+    "description": "Explore our wide range of categories to find the services that suit your needs.",
+    "viewCategory": "View Category"
+  }
+}

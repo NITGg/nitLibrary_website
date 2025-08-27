@@ -1,0 +1,29 @@
+{
+  "hero": {
+    "title": "Everything you need... at your fingertips!",
+    "subtitle": "Copying services, preparation of booklets, and office supplies with the highest quality and fastest turnaround",
+    "explore": "Explore our services",
+    "orderNow": "Order now"
+  },
+  "features": {
+    "strength": "Top instructors",
+    "quality": "Highest quality",
+    "timing": "Fastest service"
+  },
+  "about": {
+    "imageAlt": "A variety of services to meet your needs",
+    "title": "We offer you comprehensive services in the world of photography, printing, and office preparation.",
+    "description": "Whether you're a student looking to photograph your study materials with high quality and fast execution, or a business owner in need of office supplies to help you organize your day efficiently, we are here to meet your needs.\nWe provide you with photography and printing services using the latest devices, with various options for sizes and colors, in addition to preparing and binding files and booklets. We also offer a wide range of office and school supplies that cater to all ages and needs.\nOur goal is to make your experience with us easy, fast, and reliable... because your comfort and satisfaction are always our top priorities.",
+    "button": "Explore our services"
+  },
+  "services": {
+    "title": "Our Services",
+    "description": "Enjoy our services with the highest quality and fastest service.",
+    "teachers": "Our Instructors",
+    "teachers_description": "Booklets from top instructors and links to educational platforms.",
+    "lib": "Office Supplies",
+    "lib_description": "Notebooks, pens, and school supplies. Office essentials for companies.",
+    "printing": "Copying and Printing Services",
+    "printing_description": "Copying booklets and books. Color and regular printing. Graduation project preparation."
+  }
+}

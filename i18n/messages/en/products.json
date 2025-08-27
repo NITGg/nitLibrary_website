@@ -1,0 +1,19 @@
+{
+  "title": "Products",
+  "description": "Discover our latest products with special offers and featured items.",
+  "addToCart": "Add to Cart",
+  "price": "${price}",
+  "offerPercent": "{offer}% OFF",
+  "featured": {
+    "title": "Featured Products",
+    "description": "Browse a selection of our best products."
+  },
+  "offer": {
+    "title": "Product Offers",
+    "description": "Don't miss out on special offers for our products."
+  },
+  "latest": {
+    "title": "Latest Products",
+    "description": "Be the first to discover our latest products."
+  }
+}

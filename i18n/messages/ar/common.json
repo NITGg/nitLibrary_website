@@ -1,0 +1,99 @@
+{
+  "welcome": "مرحبًا بكم في المكتبة الوطنية",
+  "explore": "استكشف مجموعتنا الواسعة من الكتب والموارد.",
+  "logoAlt": "شعار المكتبة الوطنية",
+  "home": "الرئيسية",
+  "about": "معلومات عنا",
+  "categories": "الفئات",
+  "contact": "اتصل بنا",
+  "loginText": "تسجيل الدخول",
+  "registerText": "إنشاء حساب",
+  "language": {
+    "switch": "تبديل اللغة",
+    "english": "English",
+    "arabic": "العربية",
+    "current": "العربية"
+  },
+  "user": {
+    "profile": "الملف الشخصي",
+    "logout": "تسجيل الخروج"
+  },
+  "cart": {
+    "title": "سلة التسوق",
+    "empty": "سلة التسوق فارغة",
+    "total": "المجموع",
+    "checkout": "إتمام الشراء",
+    "addToCart": "أضف إلى السلة"
+  },
+  "wishlist": {
+    "title": "قائمة الأمنيات",
+    "empty": "قائمة الأمنيات فارغة",
+    "totalItems": "إجمالي العناصر",
+    "viewAll": "عرض الكل",
+    "addToCart": "أضف إلى السلة",
+    "remove": "إزالة من قائمة الأمنيات",
+    "addToWishlist": "أضف إلى قائمة الأمنيات",
+    "removeFromWishlist": "إزالة من قائمة الأمنيات",
+    "clearAll": "مسح الكل",
+    "confirmClearAll": "هل أنت متأكد من أنك تريد مسح جميع العناصر من قائمة الأمنيات؟"
+  },
+  "footer": {
+    "linksTitle": "روابط سريعة",
+    "categories": "الفئات",
+    "teachers": "مدرسينا",
+    "about": "معلومات عنا",
+    "contact": "اتصل بنا",
+    "privacy": "سياسة الخصوصية",
+    "terms": "الشروط والأحكام",
+    "copyright": "جميع الحقوق محفوظة © {year} منتج - تطوير بواسطة "
+  },
+  "login": {
+    "welcome_login_big": "مرحبًا بكم في صفحة تسجيل الدخول",
+    "welcome_login_text": "يرجى إدخال بيانات اعتمادك لتسجيل الدخول.",
+    "no_account": "ليس لديك حساب؟",
+    "create_account": "إنشاء حساب",
+    "emailOrPhone": "البريد الإلكتروني أو رقم الهاتف",
+    "password": "كلمة المرور",
+    "forgotPassword": "هل نسيت كلمة المرور؟",
+    "btn": "تسجيل الدخول",
+    "error": {
+      "emailOrPhoneIsRequired": "البريد الإلكتروني أو رقم الهاتف مطلوب",
+      "invalidPhoneFormat": "تنسيق رقم الهاتف غير صالح",
+      "invalidEmail": "البريد الإلكتروني غير صالح",
+      "invalidPhone": "رقم الهاتف غير صالح",
+      "passwordIsRequired": "كلمة المرور مطلوبة",
+      "passwordLength": "يجب أن تكون كلمة المرور 6 أحرف على الأقل"
+    }
+  },
+  "register": {
+    "welcome_register_big": "مرحبًا بكم في صفحة إنشاء الحساب",
+    "welcome_register_text": "قم بملء البيانات التالية لإنشاء حسابك",
+    "have_account": "هل لديك حساب بالفعل؟",
+    "login_link": "تسجيل الدخول",
+    "fullname": "الاسم الكامل*",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف*",
+    "password": "كلمة المرور*",
+    "confirmPassword": "تأكيد كلمة المرور*",
+    "btn": "إنشاء حساب",
+    "btn_loading": "جاري إنشاء الحساب...",
+    "otp_title": "تفعيل الحساب",
+    "otp_text": "تم إرسال رمز التفعيل إلى",
+    "otp_placeholder": "أدخل رمز التفعيل",
+    "resend_otp": "إعادة إرسال الرمز",
+    "verify_btn": "تفعيل الحساب",
+    "verify_loading": "جاري التفعيل...",
+    "back_to_register": "العودة إلى التسجيل",
+    "error": {
+      "fullnameRequired": "الاسم الكامل مطلوب",
+      "invalidEmail": "صيغة البريد الإلكتروني غير صحيحة",
+      "phoneRequired": "رقم الهاتف مطلوب",
+      "passwordRequired": "كلمة المرور مطلوبة",
+      "passwordLength": "كلمة المرور يجب أن تكون 8 أحرف على الأقل",
+      "confirmPasswordRequired": "تأكيد كلمة المرور مطلوب",
+      "passwordMismatch": "كلمة المرور غير متطابقة",
+      "otpRequired": "رمز التفعيل مطلوب",
+      "otpLength": "رمز التفعيل يجب أن يكون 6 أرقام"
+    }
+  }
+}

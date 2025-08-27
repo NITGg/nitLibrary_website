@@ -1,0 +1,59 @@
+{
+  "title": "Terms and Conditions",
+  "subtitle": "Please read these terms and conditions carefully before using the app.",
+  "effectiveDate": "Effective Date: [28/02/2025]",
+  "welcome": "Welcome to Investor! By using this app, you agree to these terms and conditions. Please read them carefully before proceeding.",
+  "section1": {
+    "title": "1. Acceptance of Terms",
+    "content": "By registering or using Investor, you agree to comply with these terms. If you do not agree, please do not use the app."
+  },
+  "section2": {
+    "title": "2. Personal Accounts",
+    "items": [
+      "Users must provide accurate information during registration.",
+      "Users are responsible for maintaining the security of their account.",
+      "We reserve the right to suspend or close accounts in case of misuse."
+    ]
+  },
+  "section3": {
+    "title": "3. Reward Points and Point-Back",
+    "items": [
+      "Points are earned based on qualifying purchases.",
+      "Points can be redeemed for discounts on future purchases or sent as gifts.",
+      "Point rates and rewards may vary based on offers and membership level.",
+      "Unused points may expire after a specified period."
+    ]
+  },
+  "section4": {
+    "title": "4. Membership Levels",
+    "items": [
+      "Membership level depends on your purchase activity.",
+      "Higher membership levels offer increased reward rates and discounts.",
+      "Program misuse may result in account suspension."
+    ]
+  },
+  "section5": {
+    "title": "5. Payment and Transactions",
+    "items": [
+      "Payments are processed securely through our partners.",
+      "Investor is not responsible for any issues related to external payment providers."
+    ]
+  },
+  "section6": {
+    "title": "6. Restrictions and Prohibited Activities",
+    "subtitle": "Users are prohibited from:",
+    "items": [
+      "Providing false or misleading information.",
+      "Engaging in fraudulent transactions.",
+      "Attempting to hack or disrupt app services."
+    ]
+  },
+  "section7": {
+    "title": "7. Terms Modifications",
+    "content": "We may update these terms at any time. Continued use of the app means acceptance of the modified terms."
+  },
+  "section8": {
+    "title": "8. Limitation of Liability",
+    "content": "Investor does not assume any responsibility for any losses or damages resulting from the use of the app."
+  }
+}
