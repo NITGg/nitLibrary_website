@@ -23,7 +23,10 @@
     "empty": "Your cart is empty",
     "total": "Total",
     "checkout": "Checkout",
-    "addToCart": "Add to Cart"
+    "addToCart": "Add to Cart",
+    "updated": "Cart updated successfully",
+    "error": "Failed to update cart",
+    "added": "Item added to cart"
   },
   "wishlist": {
     "title": "Wishlist",
@@ -35,7 +38,10 @@
     "addToWishlist": "Add to Wishlist",
     "removeFromWishlist": "Remove from Wishlist",
     "clearAll": "Clear All",
-    "confirmClearAll": "Are you sure you want to clear all items from your wishlist?"
+    "confirmClearAll": "Are you sure you want to clear all items from your wishlist?",
+    "error": "Failed to update wishlist",
+    "added": "Item added to wishlist",
+    "removed": "Item removed from wishlist"
   },
   "footer": {
     "linksTitle": "Quick Links",

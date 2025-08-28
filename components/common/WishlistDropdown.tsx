@@ -5,40 +5,32 @@ import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Locale } from "@/i18n/routing";
 import ImageApi from "../ImageApi";
-import { useShoppingState } from "@/hooks/useShoppingState";
+import { useWishlist } from "@/hooks/useWishlist";
+import { WishlistItem } from "@/types/common";
+import { Product } from "@/types/product";
+import { useCart } from "@/hooks/useCart";
 
 const WishlistDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const t = useTranslations("common");
   const lang = useLocale() as Locale;
+  const { wishlist, wishlistCount, clearWishlist, addToWishlist } =
+    useWishlist();
+  const { addToCart, removeFromCart, cart } = useCart();
 
-  // Use consolidated hook with hydration safety
-  const {
-    wishlist,
-    wishlistCount,
-    removeFromWishlist,
-    clearWishlist,
-    addToCart,
-    isMounted,
-  } = useShoppingState();
-
-  const getItemPrice = (item: any) => {
-    return item.offer
-      ? item.price - (item.price * item.offer) / 100
-      : item.price;
+  const getItemPrice = (item: WishlistItem) => {
+    return item.product.offer
+      ? item.product.price - (item.product.price * item.product.offer) / 100
+      : item.product.price;
   };
 
-  const handleAddToCart = async (item: any) => {
+  const handleAddToCart = async (item: Product) => {
     await addToCart({
       id: item.id,
-      name: item.name,
-      nameAr: item.nameAr,
-      price: item.price,
-      image: item.image,
-      offer: item.offer,
+      productId: item.id,
+      product: item,
+      quantity: 1,
     });
-    // Optionally remove from wishlist after adding to cart
-    // await removeFromWishlist(item.id);
   };
 
   const handleClearAll = async () => {
@@ -46,17 +38,6 @@ const WishlistDropdown = () => {
       await clearWishlist();
     }
   };
-
-  // Only render counter after mounting to prevent hydration mismatch
-  if (!isMounted) {
-    return (
-      <div className="relative">
-        <Button variant="outline" size="icon" className="relative">
-          <Heart className="size-4" />
-        </Button>
-      </div>
-    );
-  }
 
   return (
     <div className="relative">
@@ -123,14 +104,14 @@ const WishlistDropdown = () => {
                         key={item.id}
                         className="flex items-center gap-3 p-2 border rounded"
                       >
-                        {item.image && (
+                        {item.product?.images?.[0] && (
                           <div className="size-10">
                             <ImageApi
-                              src={item.image}
+                              src={item.product.images[0]}
                               alt={
                                 lang === "ar"
-                                  ? item.nameAr ?? item.name
-                                  : item.name
+                                  ? item.product.nameAr ?? item.product.name
+                                  : item.product.name
                               }
                               width={40}
                               height={40}
@@ -142,8 +123,8 @@ const WishlistDropdown = () => {
                         <div className="flex-1 min-w-0">
                           <h4 className="text-sm font-medium truncate">
                             {lang === "ar"
-                              ? item.nameAr ?? item.name
-                              : item.name}
+                              ? item.product.nameAr ?? item.product.name
+                              : item.product.name}
                           </h4>
                           <p className="text-sm text-gray-500">
                             ${getItemPrice(item).toFixed(2)}
@@ -153,22 +134,36 @@ const WishlistDropdown = () => {
                         {/* Action Buttons */}
                         <div className="flex items-center gap-1">
                           {/* Add to Cart Button */}
+                          {cart.find(
+                            (cartItem) => cartItem.productId === item.productId
+                          ) ? (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="w-8 h-8 text-red-500 hover:text-red-700"
+                              onClick={async () =>
+                                await removeFromCart(item.productId)
+                              }
+                              title={t("cart.remove")}
+                            >
+                              <X className="w-4 h-4" />
+                            </Button>
+                          ) : (
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="w-8 h-8 text-green-600 hover:text-green-700"
+                              onClick={() => handleAddToCart(item as any)}
+                              title={t("wishlist.addToCart")}
+                            >
+                              <ShoppingCart className="w-4 h-4" />
+                            </Button>
+                          )}
                           <Button
                             variant="outline"
                             size="icon"
-                            className="w-8 h-8 text-green-600 hover:text-green-700"
-                            onClick={() => handleAddToCart(item)}
-                            title={t("wishlist.addToCart")}
-                          >
-                            <ShoppingCart className="w-4 h-4" />
-                          </Button>
-
-                          {/* Remove Button */}
-                          <Button
-                            variant="ghost"
-                            size="icon"
                             className="w-8 h-8 text-red-500 hover:text-red-700"
-                            onClick={() => removeFromWishlist(item.id)}
+                            onClick={async () => await addToWishlist(item)}
                             title={t("wishlist.remove")}
                           >
                             <X className="w-4 h-4" />

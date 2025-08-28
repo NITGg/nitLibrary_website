@@ -10,7 +10,8 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
-import { setCookie } from "@/app/actions/cookie";
+import { setTokenServer } from "@/lib/serverCookie";
+import { setTokenClient } from "@/lib/clientCookie";
 
 interface LoginFormProps {
   onForgotPassword: () => void;
@@ -59,8 +60,10 @@ const LoginForm: React.FC<LoginFormProps> = ({
       });
 
       // Use the new login function that automatically sets token and verifies user
-      await login(data.token);
-      await setCookie("token", data.token);
+      // await login(data.token);
+
+      // await setTokenServer(data.token);
+      await login(null, data.token);
       toast.success(data.message);
       onLoginSuccess();
     } catch (error: any) {

@@ -8,10 +8,11 @@ import clsx from "clsx";
 import { Button } from "./ui/button";
 import { Link } from "@/i18n/navigation";
 import ImageApi from "./ImageApi";
-import { useAtom } from "jotai";
-import { addToCartAtom } from "@/atoms/cartAtom";
-import { toggleWishlistAtom, isInWishlistAtom } from "@/atoms/wishlistAtom";
+// import { toggleWishlistAtom, isInWishlistAtom } from "@/atoms/wishlistAtom";
 import { ShoppingCart, Heart } from "lucide-react";
+import { useCart } from "@/hooks/useCart";
+import { useAuth } from "@/hooks/useAuth";
+import { useWishlist } from "@/hooks/useWishlist";
 
 type GridCardsProps =
   | {
@@ -62,38 +63,33 @@ const ItemCard = ({
       item: Category;
       lang: Locale;
     }) => {
-  const t = useTranslations(type === "category" ? "categories.cards" : "products");
-  const [, addToCart] = useAtom(addToCartAtom);
-  const [, toggleWishlist] = useAtom(toggleWishlistAtom);
-  const [isInWishlist] = useAtom(isInWishlistAtom);
+  const t = useTranslations(
+    type === "category" ? "categories.cards" : "products"
+  );
+  const { addToCart } = useCart();
+  const { addToWishlist, wishlist } = useWishlist();
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     if (type === "product") {
-      addToCart({
-        id: String(item.id),
-        name: item.name,
-        nameAr: item.nameAr,
-        price: item.price,
-        image: item.images?.[0],
-        offer: item.offer,
+      await addToCart({
+        id: item.id,
+        product: item,
+        productId: item.id,
+        quantity: 1,
       });
     }
   };
 
   const handleToggleWishlist = () => {
     if (type === "product") {
-      toggleWishlist({
-        id: String(item.id),
-        name: item.name,
-        nameAr: item.nameAr,
-        price: item.price,
-        image: item.images?.[0],
-        offer: item.offer,
+      addToWishlist({
+        id: item.id,
+        product: item,
+        productId: item.id,
       });
     }
   };
 
-  const inWishlist = type === "product" ? isInWishlist(String(item.id)) : false;
   return (
     <Card className="relative min-h-[400px] overflow-hidden flex flex-col">
       {type === "product" && !!item.offer && (
@@ -114,12 +110,12 @@ const ItemCard = ({
           size="icon"
           onClick={handleToggleWishlist}
           className={`absolute top-2 left-2 z-10 w-8 h-8 rounded-full ${
-            inWishlist
+            wishlist.find((i) => i.productId === item.id)
               ? "text-red-500 bg-white hover:bg-gray-100"
               : "text-gray-400 bg-white hover:bg-gray-100"
           }`}
         >
-          <Heart className={`w-4 h-4 ${inWishlist ? "fill-current" : ""}`} />
+          <Heart className={`w-4 h-4 ${wishlist.find((i) => i.productId === item.id) ? "fill-current" : ""}`} />
         </Button>
       )}
       <CardContent className="flex-center flex-col gap-4 p-6 flex-1">
@@ -172,11 +168,13 @@ const ItemCard = ({
                   size="icon"
                   onClick={handleToggleWishlist}
                   className={`${
-                    inWishlist ? "text-red-500 border-red-500" : ""
+                    wishlist.find((i) => i.productId === item.id)
+                      ? "text-red-500 border-red-500"
+                      : ""
                   }`}
                 >
                   <Heart
-                    className={`size-4 ${inWishlist ? "fill-current" : ""}`}
+                    className={`size-4 ${wishlist.find((i) => i.productId === item.id) ? "fill-current" : ""}`}
                   />
                 </Button>
               </div>

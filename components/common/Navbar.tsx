@@ -8,7 +8,6 @@ import { clsx } from "clsx";
 import { Menu, X, User, LogOut } from "lucide-react";
 import { GlobalIcon } from "../ui/icons";
 import CartDropdown from "./CartDropdown";
-import WishlistDropdown from "./WishlistDropdown";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter, usePathname as useNextPathname } from "next/navigation";
 import {
@@ -18,7 +17,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import CartWishlistSync from "./CartWishlistSync";
+import logoutServer from "@/app/actions/logout";
+import WishlistDropdown from "./WishlistDropdown";
 
 const links = [
   { href: "/", label: "home" },
@@ -30,7 +30,7 @@ const Navbar = () => {
   const t = useTranslations("common");
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isAuthenticated, user, logout } = useAuth();
+  const { user, logout } = useAuth();
   const locale = useLocale();
   const router = useRouter();
   const nextPathname = useNextPathname();
@@ -38,13 +38,18 @@ const Navbar = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     logout();
+    await logoutServer();
     closeMenu();
   };
 
-  const handleLanguageChange = (newLocale: string) => {
-    // Remove the current locale from the pathname and add the new one
+  const handleLanguageChange = (newLocale: "en" | "ar") => {
+    if (locale === newLocale) {
+      closeMenu();
+      return;
+    }
+    // Only check and change if the new locale is different
     const pathWithoutLocale = nextPathname.replace(/^\/[a-z]{2}/, "") || "/";
     router.push(`/${newLocale}${pathWithoutLocale}`);
     closeMenu();
@@ -79,8 +84,6 @@ const Navbar = () => {
 
       {/* Desktop Auth Buttons */}
       <div className="hidden md:flex items-center gap-4">
-        <CartWishlistSync />
-
         {/* Language Dropdown */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -105,7 +108,7 @@ const Navbar = () => {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        {isAuthenticated ? (
+        {user ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="flex items-center gap-2">
@@ -208,7 +211,7 @@ const Navbar = () => {
               </div>
             </div>
 
-            {isAuthenticated ? (
+            {user ? (
               <>
                 <div className="flex items-center gap-2 px-4 py-2 text-secondary-foreground">
                   <User size={16} />

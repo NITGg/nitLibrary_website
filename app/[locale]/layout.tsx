@@ -8,7 +8,7 @@ import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
 import { Provider } from "jotai";
 import { Toaster } from "@/components/ui/sonner";
-import { AuthProvider } from "@/providers/AuthProvider";
+import { UserHydrator } from "@/components/auth/UserHydrator";
 
 export async function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -48,15 +48,14 @@ export default async function RootLayout({
       >
         <Provider>
           <NextIntlClientProvider locale={locale}>
-            <AuthProvider>
-              <main>
-                <Navbar />
-                {children}
-                {auth}
-                <Footer />
-                <Toaster />
-              </main>
-            </AuthProvider>
+            <main>
+              <Navbar />
+              {children}
+              {auth}
+              <Footer />
+              <Toaster />
+              <UserHydrator />
+            </main>
           </NextIntlClientProvider>
         </Provider>
       </body>

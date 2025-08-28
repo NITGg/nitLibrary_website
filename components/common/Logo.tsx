@@ -6,11 +6,15 @@ const Logo = ({ className = "flex-shrink-0" }: { className?: string }) => {
   const t = useTranslations("common");
   return (
     <div className={className}>
-      <Link
-        href="/"
-        className="flex items-center gap-2 size-full relative"
-      >
-        <Image className="hover:scale-95 transition-transform ease-in-out duration-200" src="/images/logo.svg" alt={t("logoAlt")} priority fill />
+      <Link href="/" className="flex items-center gap-2 size-full relative">
+        <Image
+          className="hover:scale-95 transition-transform ease-in-out duration-200"
+          src="/images/logo.svg"
+          alt={t("logoAlt")}
+          priority
+          fill
+          sizes="(max-width: 768px) 80px, 120px"
+        />
       </Link>
     </div>
   );

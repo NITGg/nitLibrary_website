@@ -1,43 +1,32 @@
 "use client";
 import { Button } from "../ui/button";
-import { ShoppingCart, X, Plus, Minus } from "lucide-react";
+import { ShoppingCart, X, Plus, Minus, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Locale } from "@/i18n/routing";
 import ImageApi from "../ImageApi";
-import { useShoppingState } from "@/hooks/useShoppingState";
+import { useCart } from "@/hooks/useCart";
+import { CartItem } from "@/types/common";
 
 const CartDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const t = useTranslations("common");
   const lang = useLocale() as Locale;
-
-  // Use consolidated hook with hydration safety
   const {
-    cart,
     cartCount,
-    cartTotal,
+    cart,
+    increaseItemQuantity,
+    decreaseItemQuantity,
     removeFromCart,
-    updateQuantity,
-    isMounted,
-  } = useShoppingState();
+    clearCart,
+    cartTotal,
+  } = useCart();
 
-  const getItemPrice = (item: any) => {
-    return item.offer
-      ? item.price - (item.price * item.offer) / 100
-      : item.price;
+  const getItemPrice = (item: CartItem) => {
+    return item.product.offer
+      ? item.product.price - (item.product.price * item.product.offer) / 100
+      : item.product.price;
   };
-
-  // Only render counter after mounting to prevent hydration mismatch
-  if (!isMounted) {
-    return (
-      <div className="relative">
-        <Button variant="outline" size="icon" className="relative">
-          <ShoppingCart className="size-4" />
-        </Button>
-      </div>
-    );
-  }
 
   return (
     <div className="relative">
@@ -70,13 +59,27 @@ const CartDropdown = () => {
             <div className="p-4">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold">{t("cart.title")}</h3>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <X className="w-4 h-4" />
-                </Button>
+                <div className="flex-center gap-2">
+                  {cart.length > 0 && (
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={async () => {
+                        await clearCart();
+                        setIsOpen(false);
+                      }}
+                    >
+                      <Trash2 className="size-4" />
+                    </Button>
+                  )}
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <X className="size-4" />
+                  </Button>
+                </div>
               </div>
 
               {cart.length === 0 ? (
@@ -92,14 +95,14 @@ const CartDropdown = () => {
                         key={item.id}
                         className="flex items-center gap-3 p-2 border rounded"
                       >
-                        {item.image && (
+                        {item.product?.images?.[0] && (
                           <div className="size-10">
                             <ImageApi
-                              src={item.image}
+                              src={item.product.images[0]}
                               alt={
                                 lang === "ar"
-                                  ? item.nameAr ?? item.name
-                                  : item.name
+                                  ? item.product?.nameAr ?? item.product?.name
+                                  : item.product?.name
                               }
                               width={40}
                               height={40}
@@ -111,11 +114,11 @@ const CartDropdown = () => {
                         <div className="flex-1 min-w-0">
                           <h4 className="text-sm font-medium truncate">
                             {lang === "ar"
-                              ? item.nameAr ?? item.name
-                              : item.name}
+                              ? item.product?.nameAr ?? item.product?.name
+                              : item.product?.name}
                           </h4>
                           <p className="text-sm text-gray-500">
-                            ${getItemPrice(item).toFixed(2)}
+                            {getItemPrice(item).toFixed(2)}
                           </p>
                         </div>
 
@@ -124,15 +127,12 @@ const CartDropdown = () => {
                           <Button
                             variant="outline"
                             size="icon"
-                            className="w-6 h-6"
-                            onClick={() =>
-                              updateQuantity({
-                                id: item.id,
-                                quantity: item.quantity - 1,
-                              })
+                            className="size-6"
+                            onClick={async () =>
+                              await decreaseItemQuantity(item.productId)
                             }
                           >
-                            <Minus className="w-3 h-3" />
+                            <Minus className="size-3" />
                           </Button>
 
                           <span className="w-8 text-center text-sm">
@@ -142,15 +142,13 @@ const CartDropdown = () => {
                           <Button
                             variant="outline"
                             size="icon"
-                            className="w-6 h-6"
-                            onClick={() =>
-                              updateQuantity({
-                                id: item.id,
-                                quantity: item.quantity + 1,
-                              })
+                            className="size-6"
+                            disabled={item.quantity + 1 > item.product.stock}
+                            onClick={async () =>
+                              await increaseItemQuantity(item.productId)
                             }
                           >
-                            <Plus className="w-3 h-3" />
+                            <Plus className="size-3" />
                           </Button>
                         </div>
 
@@ -158,10 +156,10 @@ const CartDropdown = () => {
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="w-6 h-6 text-red-500 hover:text-red-700"
-                          onClick={() => removeFromCart(item.id)}
+                          className="size-6 text-red-500 hover:text-red-700"
+                          onClick={() => removeFromCart(item.productId)}
                         >
-                          <X className="w-3 h-3" />
+                          <X className="size-3" />
                         </Button>
                       </div>
                     ))}

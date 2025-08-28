@@ -22,7 +22,6 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { ArrowLeft } from "lucide-react";
-import { setCookie } from "@/app/actions/cookie";
 
 interface RegisterFormData {
   fullname: string;
@@ -128,8 +127,7 @@ const Register = ({ type }: { type?: "model" }) => {
         lang
       );
 
-      await login(registrationToken);
-      await setCookie("token", registrationToken);
+      await login(null, registrationToken);
       toast.success(response.message);
       router.push("/");
     } catch (error: any) {
