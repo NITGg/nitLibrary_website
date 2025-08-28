@@ -1,28 +1,26 @@
 "use client";
-import { useAtom } from "jotai";
-import {
-  wishlistCountAtom,
-  wishlistAtom,
-  removeFromWishlistAtom,
-  clearWishlistAtom,
-} from "@/atoms/wishlistAtom";
-import { addToCartAtom } from "@/atoms/cartAtom";
 import { Button } from "../ui/button";
 import { Heart, X, ShoppingCart } from "lucide-react";
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Locale } from "@/i18n/routing";
 import ImageApi from "../ImageApi";
+import { useShoppingState } from "@/hooks/useShoppingState";
 
 const WishlistDropdown = () => {
-  const [wishlistCount] = useAtom(wishlistCountAtom);
-  const [wishlist] = useAtom(wishlistAtom);
-  const [, removeFromWishlist] = useAtom(removeFromWishlistAtom);
-  const [, clearWishlist] = useAtom(clearWishlistAtom);
-  const [, addToCart] = useAtom(addToCartAtom);
   const [isOpen, setIsOpen] = useState(false);
   const t = useTranslations("common");
   const lang = useLocale() as Locale;
+
+  // Use consolidated hook with hydration safety
+  const {
+    wishlist,
+    wishlistCount,
+    removeFromWishlist,
+    clearWishlist,
+    addToCart,
+    isMounted,
+  } = useShoppingState();
 
   const getItemPrice = (item: any) => {
     return item.offer
@@ -49,8 +47,19 @@ const WishlistDropdown = () => {
     }
   };
 
+  // Only render counter after mounting to prevent hydration mismatch
+  if (!isMounted) {
+    return (
+      <div className="relative">
+        <Button variant="outline" size="icon" className="relative">
+          <Heart className="size-4" />
+        </Button>
+      </div>
+    );
+  }
+
   return (
-    <div suppressHydrationWarning className="relative">
+    <div className="relative">
       {/* Wishlist Button */}
       <Button
         variant="outline"
@@ -60,9 +69,7 @@ const WishlistDropdown = () => {
       >
         <Heart className="size-4" />
         {wishlistCount > 0 && (
-          <span
-            className="absolute -top-2 -end-2 bg-red-500 text-white text-xs rounded-full size-5 flex-center"
-          >
+          <span className="absolute -top-2 -end-2 bg-red-500 text-white text-xs rounded-full size-5 flex-center">
             {wishlistCount}
           </span>
         )}
@@ -118,17 +125,17 @@ const WishlistDropdown = () => {
                       >
                         {item.image && (
                           <div className="size-10">
-                          <ImageApi
-                            src={item.image}
-                            alt={
-                              lang === "ar"
-                                ? item.nameAr ?? item.name
-                                : item.name
-                            }
-                            width={40}
-                            height={40}
-                            className="size-10 object-cover rounded"
-                          />
+                            <ImageApi
+                              src={item.image}
+                              alt={
+                                lang === "ar"
+                                  ? item.nameAr ?? item.name
+                                  : item.name
+                              }
+                              width={40}
+                              height={40}
+                              className="size-10 object-cover rounded"
+                            />
                           </div>
                         )}
 

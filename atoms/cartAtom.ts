@@ -34,9 +34,15 @@ interface BackendCartItem {
 // Load cart from localStorage on initialization
 const loadCartFromStorage = (): CartItem[] => {
   if (typeof window === "undefined") return [];
+
+  // Use a try-catch block to handle any localStorage errors
   try {
-    const saved = localStorage.getItem("cart");
-    return saved ? JSON.parse(saved) : [];
+    // Only access localStorage on the client side during hydration
+    if (document.readyState === "complete") {
+      const saved = localStorage.getItem("cart");
+      return saved ? JSON.parse(saved) : [];
+    }
+    return [];
   } catch {
     return [];
   }
@@ -146,9 +152,12 @@ export const addToCartAtom = atom(
 
     set(cartAtom, newCart);
     saveCartToStorage(newCart);
+console.log(user);
+console.log(token);
 
     // Sync with backend if user is logged in
     if (user && token) {
+      console.log("Syncing cart with backend:");
       try {
         await clientApiFetch("/api/users/cart", {
           method: "POST",

@@ -31,9 +31,15 @@ interface BackendWishlistItem {
 // Load wishlist from localStorage on initialization
 const loadWishlistFromStorage = (): WishlistItem[] => {
   if (typeof window === "undefined") return [];
+
+  // Use a try-catch block to handle any localStorage errors
   try {
-    const saved = localStorage.getItem("wishlist");
-    return saved ? JSON.parse(saved) : [];
+    // Only access localStorage on the client side during hydration
+    if (document.readyState === "complete") {
+      const saved = localStorage.getItem("wishlist");
+      return saved ? JSON.parse(saved) : [];
+    }
+    return [];
   } catch {
     return [];
   }

@@ -1,27 +1,36 @@
-export const setCookie = (name: string, value: string, days: number) => {
-  // Only access document on client-side
-  if (typeof window === "undefined") {
-    return;
-  }
-  const expires = new Date();
-  expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
-  document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
-};
-export const getCookie = (name: string): string | null => {
-  // Only access document on client-side
-  if (typeof window === "undefined") {
-    return null;
-  }
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop()?.split(";").shift() || null;
-  return null;
-};
+// lib/authCookies.ts
+import { cookies } from "next/headers"; // server
+    import Cookies from 'js-cookie';
 
-export const deleteCookie = (name: string) => {
-  // Only access document on client-side
-  if (typeof window === "undefined") {
-    return;
-  }
-  setCookie(name, "", -1);
-};
+
+const TOKEN_KEY = "token";
+
+// client: set cookie
+export function setTokenClient(token: string) {
+  Cookies.set(TOKEN_KEY, token, { path: "/" });
+}
+
+// client: get cookie
+export function getTokenClient(): string | undefined {
+  return Cookies.get(TOKEN_KEY);
+}
+
+// client: clear cookie
+export function clearTokenClient() {
+  Cookies.remove(TOKEN_KEY);
+}
+
+// server: get cookie
+export async function getTokenServer(): Promise<string | undefined> {
+  return (await cookies()).get(TOKEN_KEY)?.value;
+}
+export async function setTokenServer(token: string, maxAge: number) {
+  (await cookies()).set(TOKEN_KEY, token, { maxAge });
+}
+export async function deleteTokenServer(){
+  return (await cookies()).delete(TOKEN_KEY);
+}
+
+
+
+

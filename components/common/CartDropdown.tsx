@@ -1,34 +1,43 @@
 "use client";
-import { useAtom } from "jotai";
-import {
-  cartCountAtom,
-  cartAtom,
-  cartTotalAtom,
-  removeFromCartAtom,
-  updateQuantityAtom,
-} from "@/atoms/cartAtom";
 import { Button } from "../ui/button";
 import { ShoppingCart, X, Plus, Minus } from "lucide-react";
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Locale } from "@/i18n/routing";
 import ImageApi from "../ImageApi";
+import { useShoppingState } from "@/hooks/useShoppingState";
 
 const CartDropdown = () => {
-  const [cartCount] = useAtom(cartCountAtom);
-  const [cart] = useAtom(cartAtom);
-  const [cartTotal] = useAtom(cartTotalAtom);
-  const [, removeFromCart] = useAtom(removeFromCartAtom);
-  const [, updateQuantity] = useAtom(updateQuantityAtom);
   const [isOpen, setIsOpen] = useState(false);
   const t = useTranslations("common");
   const lang = useLocale() as Locale;
+
+  // Use consolidated hook with hydration safety
+  const {
+    cart,
+    cartCount,
+    cartTotal,
+    removeFromCart,
+    updateQuantity,
+    isMounted,
+  } = useShoppingState();
 
   const getItemPrice = (item: any) => {
     return item.offer
       ? item.price - (item.price * item.offer) / 100
       : item.price;
   };
+
+  // Only render counter after mounting to prevent hydration mismatch
+  if (!isMounted) {
+    return (
+      <div className="relative">
+        <Button variant="outline" size="icon" className="relative">
+          <ShoppingCart className="size-4" />
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div className="relative">
@@ -41,7 +50,7 @@ const CartDropdown = () => {
       >
         <ShoppingCart className="size-4" />
         {cartCount > 0 && (
-          <span suppressHydrationWarning className="absolute -top-2 -end-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+          <span className="absolute -top-2 -end-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
             {cartCount}
           </span>
         )}

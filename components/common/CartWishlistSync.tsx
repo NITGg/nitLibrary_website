@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
-import { useCart, useWishlist } from "@/hooks/useCartAndWishlist";
+import { useShoppingState } from "@/hooks/useShoppingState";
 import CartDropdown from "@/components/common/CartDropdown";
 import WishlistDropdown from "@/components/common/WishlistDropdown";
 
@@ -16,17 +16,27 @@ import WishlistDropdown from "@/components/common/WishlistDropdown";
  */
 const CartWishlistSync = () => {
   const { isAuthenticated } = useAuth();
-  const { syncCartFromBackend } = useCart();
-  const { syncWishlistFromBackend } = useWishlist();
+  const { syncCartFromBackend, syncWishlistFromBackend, isMounted } =
+    useShoppingState();
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && isMounted) {
       // Sync both cart and wishlist when user logs in
       console.log("User authenticated, syncing cart and wishlist...");
       syncCartFromBackend();
       syncWishlistFromBackend();
     }
-  }, [isAuthenticated, syncCartFromBackend, syncWishlistFromBackend]);
+  }, [
+    isAuthenticated,
+    syncCartFromBackend,
+    syncWishlistFromBackend,
+    isMounted,
+  ]);
+
+  // During server side rendering or hydration, don't render anything
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <div className="flex gap-2">
