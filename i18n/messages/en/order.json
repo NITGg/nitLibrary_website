@@ -1,0 +1,29 @@
+{
+  "checkout": "Checkout",
+  "orderSummary": "Order Summary",
+  "shippingDetails": "Shipping Details",
+  "paymentMethod": "Payment Method",
+  "shippingAddress": "Shipping Address",
+  "notes": "Notes",
+  "placeOrder": "Place Order",
+  "subtotal": "Subtotal",
+  "shipping": "Shipping",
+  "total": "Total",
+  "cash": "Cash on Delivery",
+  "card": "Credit/Debit Card",
+  "enterAddress": "Enter your shipping address",
+  "additionalInformation": "Additional information about your order",
+  "orderSuccess": "Order Placed Successfully",
+  "orderProcessing": "Your order is being processed",
+  "orderFailed": "Order Failed",
+  "tryAgain": "Please try again later",
+  "emptyCart": "Your cart is empty",
+  "continueShopping": "Continue Shopping",
+  "unauthorized": "Unauthorized",
+  "selectPaymentMethod": "Select Payment Method",
+  "currency": "EGP",
+  "error": {
+    "paymentMethodIsRequired": "Payment method is required",
+    "shippingAddressIsRequired": "Shipping address is required"
+  }
+}

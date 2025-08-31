@@ -16,7 +16,7 @@ const WishlistDropdown = () => {
   const lang = useLocale() as Locale;
   const { wishlist, wishlistCount, clearWishlist, addToWishlist } =
     useWishlist();
-  const { addToCart, removeFromCart, cart } = useCart();
+  const { addToCart, cart } = useCart();
 
   const getItemPrice = (item: WishlistItem) => {
     return item.product.offer
@@ -34,9 +34,7 @@ const WishlistDropdown = () => {
   };
 
   const handleClearAll = async () => {
-    if (confirm(t("wishlist.confirmClearAll"))) {
-      await clearWishlist();
-    }
+    await clearWishlist();
   };
 
   return (
@@ -60,9 +58,13 @@ const WishlistDropdown = () => {
       {isOpen && (
         <>
           {/* Backdrop */}
-          <div
-            className="fixed inset-0 z-40"
+          <button
+            type="button"
+            aria-label={t("wishlist.closeDropdown")}
+            className="fixed inset-0 z-40 p-0 m-0 border-0 bg-transparent"
             onClick={() => setIsOpen(false)}
+            style={{ outline: "none", width: "100%", height: "100%" }}
+            tabIndex={-1}
           />
 
           {/* Wishlist Dropdown */}
@@ -86,7 +88,7 @@ const WishlistDropdown = () => {
                     size="icon"
                     onClick={() => setIsOpen(false)}
                   >
-                    <X className="w-4 h-4" />
+                    <X className="size-4" />
                   </Button>
                 </div>
               </div>
@@ -134,21 +136,9 @@ const WishlistDropdown = () => {
                         {/* Action Buttons */}
                         <div className="flex items-center gap-1">
                           {/* Add to Cart Button */}
-                          {cart.find(
+                          {!cart.find(
                             (cartItem) => cartItem.productId === item.productId
-                          ) ? (
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="w-8 h-8 text-red-500 hover:text-red-700"
-                              onClick={async () =>
-                                await removeFromCart(item.productId)
-                              }
-                              title={t("cart.remove")}
-                            >
-                              <X className="w-4 h-4" />
-                            </Button>
-                          ) : (
+                          ) && (
                             <Button
                               variant="outline"
                               size="icon"
@@ -156,7 +146,7 @@ const WishlistDropdown = () => {
                               onClick={() => handleAddToCart(item as any)}
                               title={t("wishlist.addToCart")}
                             >
-                              <ShoppingCart className="w-4 h-4" />
+                              <ShoppingCart className="size-4" />
                             </Button>
                           )}
                           <Button
@@ -166,7 +156,7 @@ const WishlistDropdown = () => {
                             onClick={async () => await addToWishlist(item)}
                             title={t("wishlist.remove")}
                           >
-                            <X className="w-4 h-4" />
+                            <X className="size-4" />
                           </Button>
                         </div>
                       </div>

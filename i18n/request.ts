@@ -20,6 +20,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
   ).default;
   const termsAndConditions = (await import(`./messages/${locale}/terms.json`))
     .default;
+    const order = (await import(`./messages/${locale}/order.json`)).default;
 
   return {
     locale,
@@ -32,6 +33,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
       contact,
       privacyPolicy,
       termsAndConditions,
+      order,
     },
   };
 });

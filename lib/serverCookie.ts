@@ -8,7 +8,7 @@ export async function getTokenServer(): Promise<string | undefined> {
   return (await cookies()).get(TOKEN_KEY)?.value;
 }
 export async function setTokenServer(token: string, maxAge: number = 360) {
-  (await cookies()).set(TOKEN_KEY, token, { maxAge });
+  (await cookies()).set(TOKEN_KEY, token, { maxAge: maxAge * 24 * 60 * 60 * 1000 });
 }
 export async function deleteTokenServer() {
   return (await cookies()).delete(TOKEN_KEY);

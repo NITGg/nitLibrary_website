@@ -8,10 +8,8 @@ import clsx from "clsx";
 import { Button } from "./ui/button";
 import { Link } from "@/i18n/navigation";
 import ImageApi from "./ImageApi";
-// import { toggleWishlistAtom, isInWishlistAtom } from "@/atoms/wishlistAtom";
 import { ShoppingCart, Heart } from "lucide-react";
 import { useCart } from "@/hooks/useCart";
-import { useAuth } from "@/hooks/useAuth";
 import { useWishlist } from "@/hooks/useWishlist";
 
 type GridCardsProps =

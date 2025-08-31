@@ -8,6 +8,8 @@
   "contact": "Contact Us",
   "loginText": "Login",
   "registerText": "Register",
+  "pleaseLogin": "Please log in",
+  "unauthorized": "Unauthorized",
   "language": {
     "switch": "Switch Language",
     "english": "English",
@@ -41,7 +43,8 @@
     "confirmClearAll": "Are you sure you want to clear all items from your wishlist?",
     "error": "Failed to update wishlist",
     "added": "Item added to wishlist",
-    "removed": "Item removed from wishlist"
+    "removed": "Item removed from wishlist",
+    "closeDropdown": "Close Wishlist"
   },
   "footer": {
     "linksTitle": "Quick Links",

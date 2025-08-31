@@ -7,6 +7,13 @@ import { Locale } from "@/i18n/routing";
 import ImageApi from "../ImageApi";
 import { useCart } from "@/hooks/useCart";
 import { CartItem } from "@/types/common";
+import { Link } from "@/i18n/navigation";
+
+export const getItemPrice = (item: CartItem) => {
+  return item.product.offer
+    ? item.product.price - (item.product.price * item.product.offer) / 100
+    : item.product.price;
+};
 
 const CartDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,12 +28,6 @@ const CartDropdown = () => {
     clearCart,
     cartTotal,
   } = useCart();
-
-  const getItemPrice = (item: CartItem) => {
-    return item.product.offer
-      ? item.product.price - (item.product.price * item.product.offer) / 100
-      : item.product.price;
-  };
 
   return (
     <div className="relative">
@@ -175,7 +176,13 @@ const CartDropdown = () => {
                     </div>
 
                     {/* Checkout Button */}
-                    <Button className="w-full">{t("cart.checkout")}</Button>
+                    <Button
+                      onClick={() => setIsOpen(false)}
+                      asChild
+                      className="w-full"
+                    >
+                      <Link href={`/checkout`}>{t("cart.checkout")}</Link>
+                    </Button>
                   </div>
                 </>
               )}

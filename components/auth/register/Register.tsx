@@ -22,6 +22,7 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { ArrowLeft } from "lucide-react";
+import Logo from "@/components/common/Logo";
 
 interface RegisterFormData {
   fullname: string;
@@ -168,13 +169,16 @@ const Register = ({ type }: { type?: "model" }) => {
   };
 
   const renderRegisterForm = () => (
-    <>
-      <div className="space-y-1 mb-6">
-        <h1 className="text-2xl font-bold">{t("welcome_register_big")}</h1>
-        <p className="text-gray-600">{t("welcome_register_text")}</p>
-      </div>
+    <div className="h-full flex flex-col gap-1 overflow-hidden">
+      <h1 className="text-2xl font-bold">{t("welcome_register_big")}</h1>
+      <p className="text-gray-600">{t("welcome_register_text")}</p>
 
-      <form onSubmit={handleSubmit(onSubmitRegister)} className="space-y-4">
+      <form
+        onSubmit={handleSubmit(onSubmitRegister)}
+        className={`flex flex-col gap-3 overflow-y-auto p-2 ${
+          type === "model" ? "h-[250px]" : "h-auto"
+        }`}
+      >
         <div className="grid md:grid-cols-2 gap-4">
           <OutlineInput
             id="register-fullname"
@@ -261,7 +265,7 @@ const Register = ({ type }: { type?: "model" }) => {
         </Button>
       </form>
 
-      <div className="mt-6 text-center">
+      <div className="text-center flex-1">
         <p className="text-gray-600">
           {t("have_account")}{" "}
           <Link
@@ -272,12 +276,12 @@ const Register = ({ type }: { type?: "model" }) => {
           </Link>
         </p>
       </div>
-    </>
+    </div>
   );
 
   const renderOtpForm = () => (
     <>
-      <div className="flex items-center gap-3 mb-6">
+      <div className="flex items-center gap-3 mb-3">
         <Button
           variant="ghost"
           size="icon"
@@ -356,18 +360,11 @@ const Register = ({ type }: { type?: "model" }) => {
   const renderContent = () => (
     <div
       className={`bg-white w-full max-w-[447px] rounded-[24px] p-8 ${
-        type === "model" ? "border-0 shadow-none bg-transparent" : ""
+        type === "model" ? "border-0 shadow-none bg-transparent !p-0" : ""
       }`}
     >
-      <div className="flex justify-center mb-6">
-        <Image
-          src="/images/logo.svg"
-          alt="library Logo"
-          width={120}
-          height={40}
-          className="object-contain"
-          priority
-        />
+      <div className="flex justify-center relative">
+        <Logo className="size-20" />
       </div>
 
       {currentStep === "register" ? renderRegisterForm() : renderOtpForm()}
@@ -377,7 +374,7 @@ const Register = ({ type }: { type?: "model" }) => {
   if (type === "model") {
     return (
       <Dialog open={open} onOpenChange={handleModalClose}>
-        <DialogContent className="max-w-[500px]">
+        <DialogContent className="max-w-[500px] max-h-[90vh] overflow-hidden">
           <div className="sr-only">
             <DialogTitle>{t("welcome_register_big")}</DialogTitle>
             <DialogDescription>{t("welcome_register_text")}</DialogDescription>
@@ -389,7 +386,7 @@ const Register = ({ type }: { type?: "model" }) => {
   }
 
   return (
-    <div className="w-full min-h-screen bg-[#241234] flex justify-center items-center">
+    <div className="w-full min-h-screen bg-[#241234] flex-center">
       {renderContent()}
     </div>
   );

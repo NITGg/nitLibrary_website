@@ -84,6 +84,8 @@ const Navbar = () => {
 
       {/* Desktop Auth Buttons */}
       <div className="hidden md:flex items-center gap-4">
+        <WishlistDropdown />
+        <CartDropdown />
         {/* Language Dropdown */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -118,12 +120,12 @@ const Navbar = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem>
-                <User className="mr-2 h-4 w-4" />
+                <User className="me-2 size-4" />
                 <span>{t("user.profile")}</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleLogout}>
-                <LogOut className="mr-2 h-4 w-4" />
+                <LogOut className="me-2 size-4" />
                 <span>{t("user.logout")}</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -192,6 +194,7 @@ const Navbar = () => {
               <div className="flex gap-2">
                 <Button
                   variant={locale === "en" ? "default" : "outline"}
+                  disabled={locale === "en"}
                   onClick={() => handleLanguageChange("en")}
                   className="flex-1 flex items-center gap-2"
                   size="sm"
@@ -201,6 +204,7 @@ const Navbar = () => {
                 </Button>
                 <Button
                   variant={locale === "ar" ? "default" : "outline"}
+                  disabled={locale === "ar"}
                   onClick={() => handleLanguageChange("ar")}
                   className="flex-1 flex items-center gap-2"
                   size="sm"
@@ -222,7 +226,7 @@ const Navbar = () => {
                   onClick={handleLogout}
                   className="w-full"
                 >
-                  <LogOut className="mr-2 h-4 w-4" />
+                  <LogOut className="mr-2 size-4" />
                   {t("user.logout")}
                 </Button>
               </>

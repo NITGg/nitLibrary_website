@@ -1,0 +1,29 @@
+{
+  "checkout": "الدفع",
+  "orderSummary": "ملخص الطلب",
+  "shippingDetails": "تفاصيل الشحن",
+  "paymentMethod": "طريقة الدفع",
+  "shippingAddress": "عنوان الشحن",
+  "notes": "ملاحظات",
+  "placeOrder": "تأكيد الطلب",
+  "subtotal": "المجموع الفرعي",
+  "shipping": "الشحن",
+  "total": "الإجمالي",
+  "cash": "الدفع عند الاستلام",
+  "card": "بطاقة الائتمان/الخصم",
+  "enterAddress": "أدخل عنوان الشحن الخاص بك",
+  "additionalInformation": "معلومات إضافية حول طلبك",
+  "orderSuccess": "تم تقديم الطلب بنجاح",
+  "orderProcessing": "يتم معالجة طلبك",
+  "orderFailed": "فشل الطلب",
+  "tryAgain": "يرجى المحاولة مرة أخرى لاحقًا",
+  "emptyCart": "سلة التسوق فارغة",
+  "continueShopping": "مواصلة التسوق",
+  "unauthorized": "غير مصرح",
+  "selectPaymentMethod": "اختر طريقة الدفع",
+  "currency": "ج",
+  "error": {
+    "paymentMethodIsRequired": "طريقة الدفع مطلوبة",
+    "shippingAddressIsRequired": "عنوان الشحن مطلوب"
+  }
+}
