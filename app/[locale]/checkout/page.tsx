@@ -41,7 +41,7 @@ export default function OrderPage() {
 
   // Redirect if not logged in
   useEffect(() => {
-     const timer = setTimeout(() => {
+    const timer = setTimeout(() => {
       if (!token || !user) {
         // No token means definitely not logged in
         toast.error(commonT("unauthorized"), {
@@ -50,9 +50,9 @@ export default function OrderPage() {
         router.push(`/${lang}/login?redirect=/order`);
       }
     }, 500); // Short delay to allow hydration
-    
+
     return () => clearTimeout(timer);
-  }, [user, router, lang, commonT, toast, token]);
+  }, [user, token, router, lang, commonT]);
 
   const {
     handleSubmit,
@@ -82,9 +82,11 @@ export default function OrderPage() {
       });
       setCart([]);
       router.push(`/${lang}`);
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : t("tryAgain");
       toast.error(t("orderFailed"), {
-        description: error.message || t("tryAgain"),
+        description: errorMessage,
       });
     }
   };

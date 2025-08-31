@@ -1,11 +1,11 @@
-"use server"
+"use server";
 import { getLocale } from "next-intl/server";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 interface ErrorEx extends Error {
   status?: number;
-  error?: any;
+  error?: unknown;
 }
 
 export async function apiFetch<T>(
@@ -25,7 +25,7 @@ export async function apiFetch<T>(
     });
 
     if (!res.ok) {
-      let errorData: any = {};
+      let errorData: Record<string, unknown> = {};
       try {
         errorData = await res.json();
       } catch {
@@ -34,8 +34,15 @@ export async function apiFetch<T>(
       }
 
       const errorMessage =
-        errorData.message ||
-        errorData.response?.data?.message ||
+        (errorData.message as string) ||
+        (errorData.response &&
+        typeof errorData.response === "object" &&
+        "data" in errorData.response &&
+        typeof errorData.response.data === "object" &&
+        errorData.response.data &&
+        "message" in errorData.response.data
+          ? (errorData.response.data.message as string)
+          : undefined) ||
         `HTTP ${res.status}: ${res.statusText}`;
 
       const error: ErrorEx = {

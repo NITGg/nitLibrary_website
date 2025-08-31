@@ -19,7 +19,14 @@ export function UserHydrator() {
     addItemUser,
     clearCartLocal,
   } = useCart();
-  const { setWishlist, getWishlistFromLocal, fetchWishlistItems, mergeWishlists, addWishlistItemUser, clearWishlistLocal } = useWishlist();
+  const {
+    setWishlist,
+    getWishlistFromLocal,
+    fetchWishlistItems,
+    mergeWishlists,
+    addWishlistItemUser,
+    clearWishlistLocal,
+  } = useWishlist();
   const locale = useLocale();
 
   useEffect(() => {
@@ -40,7 +47,7 @@ export function UserHydrator() {
         console.error("Failed to verify user:", error);
       }
     })();
-  }, [login, token, user]);
+  }, [login, token, user, locale]);
 
   useEffect(() => {
     const syncCart = async () => {
@@ -73,7 +80,16 @@ export function UserHydrator() {
     };
 
     syncCart();
-  }, [user, token]);
+  }, [
+    user,
+    token,
+    addItemUser,
+    clearCartLocal,
+    fetchCartItems,
+    getCartFromLocal,
+    mergeCarts,
+    setCart,
+  ]);
 
   useEffect(() => {
     const syncWishlist = async () => {
@@ -106,7 +122,16 @@ export function UserHydrator() {
     };
 
     syncWishlist();
-  }, [user, token]);
+  }, [
+    user,
+    token,
+    addWishlistItemUser,
+    clearWishlistLocal,
+    fetchWishlistItems,
+    getWishlistFromLocal,
+    mergeWishlists,
+    setWishlist,
+  ]);
 
   return null;
 }

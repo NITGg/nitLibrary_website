@@ -28,10 +28,13 @@ const fetchProducts = async (
       queryParams.append("sort", "-createdAt");
       queryParams.append("createdAt", "true");
     }
-    if (searchParams?.sort)
-      queryParams.get("sort")
-        ? queryParams.set("sort", searchParams.sort.toString())
-        : queryParams.append("sort", searchParams.sort.toString());
+    if (searchParams?.sort) {
+      if (queryParams.get("sort")) {
+        queryParams.set("sort", searchParams.sort.toString());
+      } else {
+        queryParams.append("sort", searchParams.sort.toString());
+      }
+    }
 
     const response = await apiFetch<ProductApiResponse>(
       `/api/products?${queryParams}`
