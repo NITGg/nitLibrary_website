@@ -143,7 +143,7 @@ const WishlistDropdown = () => {
                               variant="outline"
                               size="icon"
                               className="w-8 h-8 text-green-600 hover:text-green-700"
-                              onClick={() => handleAddToCart(item as any)}
+                              onClick={() => handleAddToCart(item.product)}
                               title={t("wishlist.addToCart")}
                             >
                               <ShoppingCart className="size-4" />

@@ -9,6 +9,7 @@ import { clientApiFetch } from "@/lib/clientApiFetch";
 import { toast } from "sonner";
 import { LoadingIcon, UserIcon } from "../ui/icons";
 import { Mail, MessageSquare } from "lucide-react";
+import { isApiError } from "@/lib/isApiError";
 
 // Form validation schema
 const createContactSchema = (t: (str: string) => string) =>
@@ -42,9 +43,13 @@ const ContactForm = () => {
 
       toast.success(t("form.success"));
       reset(); // Clear form after successful submission
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Contact form error:", error);
-      toast.error(t("form.error"));
+      toast.error(
+        isApiError(error)
+          ? error.response.data.message
+          : (error as Error).message ?? t("form.error")
+      );
     }
   };
 

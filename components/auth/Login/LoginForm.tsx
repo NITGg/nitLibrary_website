@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
+import { isApiError } from "@/lib/isApiError";
 
 interface LoginFormProps {
   onForgotPassword: () => void;
@@ -59,10 +60,12 @@ const LoginForm: React.FC<LoginFormProps> = ({
       await login(null, data.token);
       toast.success(data.message);
       onLoginSuccess();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Login Error:", error);
       toast.error(
-        error?.response?.data?.message ?? error.message ?? "There is an Error"
+        isApiError(error)
+          ? error.response.data.message
+          : (error as Error).message ?? "There is an Error"
       );
     } finally {
       setLoading(false);

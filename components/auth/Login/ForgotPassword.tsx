@@ -16,6 +16,7 @@ import { useForm } from "react-hook-form";
 import { apiFetch } from "@/lib/apiFetch";
 import { Button } from "@/components/ui/button";
 import ShowPasswordBtn from "@/components/formInputs/ShowPasswordBtn";
+import { isApiError } from "@/lib/isApiError";
 
 interface ForgotPasswordFormData {
   phoneOrEmail: string;
@@ -141,9 +142,13 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBackToLogin }) => {
         setStep("otp");
         toast.success(`${t("otpSent")} ${data.phoneOrEmail}`);
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Send OTP Error:", error);
-      toast.error(error.response?.data?.message ?? "Failed to send OTP");
+      toast.error(
+        isApiError(error)
+          ? error.response.data.message
+          : (error as Error).message ?? "Failed to send OTP"
+      );
     } finally {
       setIsLoading(false);
     }
@@ -190,9 +195,13 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onBackToLogin }) => {
         reset();
         onBackToLogin();
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Reset Password Error:", error);
-      toast.error(error.response?.data?.message ?? "Failed to reset password");
+      toast.error(
+        isApiError(error)
+          ? error.response.data.message
+          : (error as Error).message ?? "Failed to reset password"
+      );
     } finally {
       setIsLoading(false);
     }

@@ -22,3 +22,11 @@ export interface WishlistItem {
   user?: User;
   createdAt?: string;
 }
+
+export interface ErrorResponse {
+  response: {
+    status: number;
+    message: string;
+    data?: Record<string, any>;
+  };
+}

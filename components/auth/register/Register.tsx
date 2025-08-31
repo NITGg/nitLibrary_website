@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/input-otp";
 import { ArrowLeft } from "lucide-react";
 import Logo from "@/components/common/Logo";
+import { isApiError } from "@/lib/isApiError";
 
 interface RegisterFormData {
   fullname: string;
@@ -96,11 +97,13 @@ const Register = ({ type }: { type?: "model" }) => {
       setRegistrationToken(response.token);
       setCurrentStep("otp");
       toast.success(response.message);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Registration Error:", error);
 
       toast.error(
-        error?.response?.data?.message ?? error?.message ?? "حدث خطأ في التسجيل"
+        isApiError(error)
+          ? error.response.data.message
+          : (error as Error).message ?? "حدث خطأ في التسجيل"
       );
     } finally {
       setIsLoading(false);
@@ -130,9 +133,13 @@ const Register = ({ type }: { type?: "model" }) => {
       await login(null, registrationToken);
       toast.success(response.message);
       router.push("/");
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("OTP Verification Error:", error);
-      toast.error(error.message ?? "رمز التفعيل غير صحيح");
+      toast.error(
+        isApiError(error)
+          ? error.response.data.message
+          : (error as Error).message ?? "رمز التفعيل غير صحيح"
+      );
     } finally {
       setIsLoading(false);
     }
@@ -159,9 +166,13 @@ const Register = ({ type }: { type?: "model" }) => {
       );
 
       toast.success("تم إعادة إرسال رمز التفعيل");
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Resend OTP Error:", error);
-      toast.error("فشل في إعادة إرسال الرمز");
+      toast.error(
+        isApiError(error)
+          ? error.response.data.message
+          : (error as Error).message ?? "فشل في إعادة إرسال الرمز"
+      );
     } finally {
       setIsLoading(false);
     }
