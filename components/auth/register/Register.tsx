@@ -1,6 +1,5 @@
 "use client";
 import { useTranslations, useLocale } from "next-intl";
-import Image from "next/image";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { OutlineInput } from "@/components/formInputs/OutlineInputs";

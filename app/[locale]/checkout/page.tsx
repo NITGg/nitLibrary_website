@@ -52,7 +52,7 @@ export default function OrderPage() {
     }, 500); // Short delay to allow hydration
     
     return () => clearTimeout(timer);
-  }, [user, router, lang, commonT, toast]);
+  }, [user, router, lang, commonT, toast, token]);
 
   const {
     handleSubmit,

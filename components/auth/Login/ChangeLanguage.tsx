@@ -6,7 +6,7 @@ import Link from "next/link";
 const ChangeLanguage = () => {
   const pathname = usePathname();
   const getNewPathname = (newLocale: string) => {
-    let newPathname = pathname.replace(/^\/(en|ar)/, "");
+    const newPathname = pathname.replace(/^\/(en|ar)/, "");
     return `/${newLocale}${newPathname}`;
   };
   return (
