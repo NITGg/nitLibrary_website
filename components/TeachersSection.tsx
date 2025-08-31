@@ -3,9 +3,12 @@ import React from "react";
 import { Card, CardAction, CardContent } from "./ui/card";
 import Image from "next/image";
 import { Button } from "./ui/button";
-import { Link } from "@/i18n/navigation";
 
-const TeachersSection = ({ priorityImages = true }: { priorityImages: boolean }) => {
+const TeachersSection = ({
+  priorityImages = true,
+}: {
+  priorityImages: boolean;
+}) => {
   const t = useTranslations("teachers");
 
   const teachers: { name: string; image: string; id: string }[] = [
@@ -37,24 +40,22 @@ const TeachersSection = ({ priorityImages = true }: { priorityImages: boolean })
       <p className="text-gray-600">{t("description")}</p>
       <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 w-full">
         {teachers.map((teacher) => (
-          <Link key={teacher.id} href={`/teachers/${teacher.id}`}>
-            <Card className="border-0 shadow-none">
-              <CardContent className="flex-col flex-center gap-2 p-4">
-                <Image
-                  src={teacher.image}
-                  alt={teacher.name}
-                  className="size-16 rounded-full object-cover"
-                  width={64}
-                  height={64}
-                  priority={priorityImages}
-                />
-                <h3 className="font-semibold">{teacher.name}</h3>
-                <CardAction className="m-auto">
-                  <Button>{t("viewService")}</Button>
-                </CardAction>
-              </CardContent>
-            </Card>
-          </Link>
+          <Card key={teacher.id} className="border-0 shadow-none">
+            <CardContent className="flex-col flex-center gap-2 p-4">
+              <Image
+                src={teacher.image}
+                alt={teacher.name}
+                className="size-16 rounded-full object-cover"
+                width={64}
+                height={64}
+                priority={priorityImages}
+              />
+              <h3 className="font-semibold">{teacher.name}</h3>
+              <CardAction className="m-auto">
+                <Button>{t("viewService")}</Button>
+              </CardAction>
+            </CardContent>
+          </Card>
         ))}
       </div>
     </section>

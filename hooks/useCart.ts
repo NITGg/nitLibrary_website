@@ -25,6 +25,9 @@ export const useCart = () => {
       return await updateItemUser(item.productId, 1, "increment");
     }
     setCart((prev) => [...prev, { ...item, quantity: 1 }]);
+    console.log("Item added to cart:", item);
+    console.log("Current cart:", cart);
+
     if (!user || !token)
       return localStorage.setItem("cart", JSON.stringify(cart));
 

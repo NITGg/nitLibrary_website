@@ -12,35 +12,36 @@ export const useWishlist = () => {
   const locale = useLocale();
   const t = useTranslations("common");
 
-const addToWishlist = async (item: WishlistItem) => {
+  const addToWishlist = async (item: WishlistItem) => {
     const existingIndex = wishlist.findIndex(
-        (i) => i.productId === item.productId
+      (i) => i.productId === item.productId
     );
     let updatedWishlist: WishlistItem[];
     let action: "add" | "remove";
 
     if (existingIndex !== -1) {
-        // Item exists, remove it
-        updatedWishlist = [...wishlist];
-        updatedWishlist.splice(existingIndex, 1);
-        action = "remove";
+      // Item exists, remove it
+      updatedWishlist = [...wishlist];
+      updatedWishlist.splice(existingIndex, 1);
+      action = "remove";
     } else {
-        // Item does not exist, add it
-        updatedWishlist = [...wishlist, item];
-        action = "add";
+      // Item does not exist, add it
+      updatedWishlist = [...wishlist, item];
+      action = "add";
     }
-
-    setWishlist(updatedWishlist);
-
     if (!user || !token) {
-        localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
-        return;
+      localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+      return;
     }
 
     await addWishlistItemUser(item.productId, action);
-};
+    setWishlist(updatedWishlist);
+  };
 
-  const addWishlistItemUser = async (productId: string, action: "add" | "remove") => {
+  const addWishlistItemUser = async (
+    productId: string,
+    action: "add" | "remove"
+  ) => {
     if (!user || !token) return;
     try {
       await clientApiFetch(
@@ -157,6 +158,6 @@ const addToWishlist = async (item: WishlistItem) => {
     fetchWishlistItems,
     mergeWishlists,
     addWishlistItemUser,
-    clearWishlistLocal
+    clearWishlistLocal,
   };
 };
