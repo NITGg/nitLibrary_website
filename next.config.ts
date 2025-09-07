@@ -12,6 +12,11 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  allowedDevOrigins: [
+    "http://localhost:3100",
+    "https://libraryapis.nitg-eg.com",
+  ],
+  
 };
 
 const withNextIntl = createNextIntlPlugin();
