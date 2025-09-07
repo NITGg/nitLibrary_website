@@ -1,6 +1,7 @@
 "use client";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+// const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+const BASE_URL = "http://localhost:3100";
 
 interface ErrorEx extends Error {
   status?: number;
