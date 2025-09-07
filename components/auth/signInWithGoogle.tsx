@@ -8,6 +8,7 @@ export default function SignInWithGoogle() {
   const signInWithGoogle = () => {
     window.open(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/google`, "_self");
   };
+  
   return (
     <Button onClick={signInWithGoogle} className="flex items-center gap-2">
       <svg width="20" height="20" viewBox="0 0 24 24">
