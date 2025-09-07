@@ -43,7 +43,9 @@ const OutlineField = forwardRef<
   ref
 ) {
   return (
-    <div className="w-full">
+    <div
+      className={clsx("w-full grid grid-rows-1 gap-1", error && "grid-rows-[1fr,1fr]")}
+    >
       <div className="flex items-center size-full relative">
         {iconStart && (
           <label

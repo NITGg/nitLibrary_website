@@ -31,11 +31,9 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-  auth,
   params,
 }: Readonly<{
   children: React.ReactNode;
-  auth: React.ReactNode;
   params: Promise<{ locale: string }>;
 }>) {
   const { locale } = await params;
@@ -51,7 +49,6 @@ export default async function RootLayout({
             <main>
               <Navbar />
               {children}
-              {auth}
               <Footer />
               <Toaster />
               <UserHydrator />

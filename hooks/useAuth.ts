@@ -12,7 +12,6 @@ import { setTokenServer } from "@/lib/serverCookie";
 export const useAuth = () => {
   const [user, setUser] = useAtom(userAtom);
   const token = getTokenClient();
-
   const logout = () => {
     setUser(null);
     clearTokenClient();

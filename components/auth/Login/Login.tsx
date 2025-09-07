@@ -4,19 +4,13 @@ import Image from "next/image";
 import { useState } from "react";
 import ChangeLanguage from "./ChangeLanguage";
 import LoginForm from "./LoginForm";
-import ForgotPassword from "./ForgotPassword";
+import ForgotPassword from "../ForgotPassword";
 import { Link, useRouter } from "@/i18n/navigation";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
+import SignInWithGoogle from "../signInWithGoogle";
 
-const Login = ({ type }: { type?: "model" }) => {
+const Login = () => {
   const t = useTranslations("common.login");
   const [currentView, setCurrentView] = useState<"login" | "forgot">("login");
-  const [open, setOpen] = useState(type === "model");
   const router = useRouter();
 
   const handleShowForgotPassword = () => {
@@ -27,19 +21,10 @@ const Login = ({ type }: { type?: "model" }) => {
     setCurrentView("login");
   };
 
-  const handleModalClose = (isOpen: boolean) => {
-    setOpen(isOpen);
-    if (!isOpen && type === "model") {
-      // Navigate back to previous page when modal closes
-      router.back();
-    }
-  };
 
   const renderContent = () => (
     <div
-      className={`bg-white w-full max-w-[447px] rounded-[24px] p-8 flex flex-col gap-3 ${
-        type === "model" ? "border-0 shadow-none bg-transparent" : ""
-      }`}
+      className="bg-white w-full max-w-[447px] rounded-[24px] p-8 flex flex-col gap-3"
     >
       <div className="flex justify-center">
         <Image
@@ -59,12 +44,8 @@ const Login = ({ type }: { type?: "model" }) => {
           </div>
           <LoginForm
             onLoginSuccess={() => {
-              if (type === "model") {
-                handleModalClose(false);
-              } else {
-                if (window.history.length > 1) return router.back();
-                router.push("/");
-              }
+              if (window.history.length > 1) return router.back();
+              router.push("/");
             }}
             onForgotPassword={handleShowForgotPassword}
           />
@@ -83,23 +64,10 @@ const Login = ({ type }: { type?: "model" }) => {
       ) : (
         <ForgotPassword onBackToLogin={handleBackToLogin} />
       )}
-      {type !== "model" && <ChangeLanguage />}
+      <ChangeLanguage />
+      <SignInWithGoogle />
     </div>
   );
-
-  if (type === "model") {
-    return (
-      <Dialog open={open} onOpenChange={handleModalClose}>
-        <DialogContent className="max-w-[500px]">
-          <div className="sr-only">
-            <DialogTitle>{t("welcome_login_big")}</DialogTitle>
-            <DialogDescription>{t("welcome_login_text")}</DialogDescription>
-          </div>
-          {renderContent()}
-        </DialogContent>
-      </Dialog>
-    );
-  }
 
   return (
     <div className="w-full min-h-screen bg-[#241234] flex justify-center items-center">

@@ -18,7 +18,7 @@ const Hero = () => {
         </div>
         <div
           dir="rtl"
-          className="grid grid-cols-4 -z-10 grid-rows-4 place-items-center absolute -top-20 left-5.5"
+          className="grid grid-cols-4 -z-10 grid-rows-4 place-items-center absolute md:-top-20 md:left-5.5 top-0 left-0"
         >
           <div
             className="size-20 rounded-full relative"
@@ -116,7 +116,7 @@ const Hero = () => {
           </defs>
         </svg>
         <svg
-          className="absolute top-0 -left-5 w-[300px] -rotate-[36deg] mix-blend-luminosity opacity-40"
+          className="absolute md:top-0 md:left-5 -top-3 left-0 w-[300px] -rotate-[36deg] mix-blend-luminosity opacity-40"
           viewBox="0 0 528 336"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -191,7 +191,7 @@ const Hero = () => {
           </defs>
         </svg>
       </div>
-      <div className="h-96 w-[350px] absolute bottom-14 right-14">
+      <div className="h-96 w-[350px] absolute bottom-14 md:right-14 hidden md:block">
         <Image src="/images/cartHome.svg" alt="Logo" fill priority />
       </div>
     </section>

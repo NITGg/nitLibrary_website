@@ -18,6 +18,7 @@ export async function clientApiFetch<T>(
   try {
     const res = await fetch(`${BASE_URL}${endpoint}`, {
       ...options,
+      credentials: options?.credentials || "include", // Always include cookies by default
       headers: {
         "Content-Type": "application/json",
         "accept-language": currentLocale,

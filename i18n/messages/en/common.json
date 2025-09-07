@@ -10,6 +10,7 @@
   "registerText": "Register",
   "pleaseLogin": "Please log in",
   "unauthorized": "Unauthorized",
+  "signInWithGoogle": "Sign in with Google",
   "language": {
     "switch": "Switch Language",
     "english": "English",
@@ -80,7 +81,7 @@
     "have_account": "Already have an account?",
     "login_link": "Sign In",
     "fullname": "Full Name*",
-    "email": "Email Address",
+    "email": "Email Address*",
     "phone": "Phone Number*",
     "password": "Password*",
     "confirmPassword": "Confirm Password*",
@@ -95,11 +96,13 @@
     "back_to_register": "Back to Registration",
     "error": {
       "fullnameRequired": "Full name is required",
+      "emailRequired": "Email address is required",
       "invalidEmail": "Invalid email address format",
       "phoneRequired": "Phone number is required",
+      "invalidPhone": "Invalid phone number",
       "passwordRequired": "Password is required",
       "passwordLength": "Password must be at least 8 characters",
-      "confirmPasswordRequired": "Password confirmation is required",
+      "confirmPasswordRequired": "Confirm Password is required",
       "passwordMismatch": "Passwords do not match",
       "otpRequired": "Verification code is required",
       "otpLength": "Verification code must be 6 digits"

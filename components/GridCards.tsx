@@ -11,6 +11,7 @@ import ImageApi from "./ImageApi";
 import { ShoppingCart, Heart } from "lucide-react";
 import { useCart } from "@/hooks/useCart";
 import { useWishlist } from "@/hooks/useWishlist";
+import { useEffect, useState } from "react";
 
 type GridCardsProps =
   | {
@@ -66,6 +67,12 @@ const ItemCard = ({
   );
   const { addToCart } = useCart();
   const { addToWishlist, wishlist } = useWishlist();
+  const [mounted, setMounted] = useState(false);
+
+  // Only enable client-side features after hydration
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleAddToCart = async () => {
     if (type === "product") {
@@ -107,13 +114,15 @@ const ItemCard = ({
           variant="ghost"
           size="icon"
           onClick={handleToggleWishlist}
-          className={`absolute top-2 left-2 z-10 w-8 h-8 rounded-full ${
-            wishlist.find((i) => i.productId === item.id)
-              ? "text-red-500 bg-white hover:bg-gray-100"
-              : "text-gray-400 bg-white hover:bg-gray-100"
-          }`}
+          className={clsx(
+            "absolute top-2 left-2 z-10 size-8 rounded-full text-gray-400 bg-white hover:bg-gray-100",
+            // Only apply conditional styles after client-side hydration
+            mounted &&
+              wishlist?.find((i) => i.productId === item.id) &&
+              "text-red-500 bg-white hover:bg-gray-100"
+          )}
         >
-          <Heart className={`w-4 h-4 ${wishlist.find((i) => i.productId === item.id) ? "fill-current" : ""}`} />
+          <Heart className="size-4" />
         </Button>
       )}
       <CardContent className="flex-center flex-col gap-4 p-6 flex-1">
@@ -165,15 +174,14 @@ const ItemCard = ({
                   variant="outline"
                   size="icon"
                   onClick={handleToggleWishlist}
-                  className={`${
-                    wishlist.find((i) => i.productId === item.id)
-                      ? "text-red-500 border-red-500"
-                      : ""
-                  }`}
+                  className={clsx(
+                    "size-10 rounded-full",
+                    mounted &&
+                      wishlist.find((i) => i.productId === item.id) &&
+                      "text-red-500 border-red-500"
+                  )}
                 >
-                  <Heart
-                    className={`size-4 ${wishlist.find((i) => i.productId === item.id) ? "fill-current" : ""}`}
-                  />
+                  <Heart className="size-4" />
                 </Button>
               </div>
             </>

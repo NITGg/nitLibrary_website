@@ -141,25 +141,6 @@
   body {
     @apply bg-background text-foreground;
   }
-
-  [data-sonner-toast][data-type="error"] {
-    @apply !bg-destructive/50 !border-destructive;
-  }
-  [data-sonner-toast] [data-description] {
-    @apply !text-inherit;
-  }
-
-  [data-sonner-toast][data-type="success"] {
-    @apply !bg-success/50 !border-success;
-  }
-
-  [data-sonner-toast][data-type="warning"] {
-    @apply !bg-warning/50 !border-warning;
-  }
-
-  [data-sonner-toast][data-type="info"] {
-    @apply !bg-info/50 !border-info;
-  }
 }
 
 @utility flex-center {
