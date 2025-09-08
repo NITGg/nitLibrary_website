@@ -11,6 +11,7 @@
   "pleaseLogin": "Please log in",
   "unauthorized": "Unauthorized",
   "signInWithGoogle": "Sign in with Google",
+  "loginSuccess": "Login successful",
   "language": {
     "switch": "Switch Language",
     "english": "English",

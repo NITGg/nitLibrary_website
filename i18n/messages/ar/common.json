@@ -11,6 +11,7 @@
   "pleaseLogin": "يرجى تسجيل الدخول",
   "unauthorized": "غير مصرح",
   "signInWithGoogle": "تسجيل الدخول باستخدام Google",
+  "loginSuccess": "تم تسجيل الدخول بنجاح",
   "language": {
     "switch": "تبديل اللغة",
     "english": "English",

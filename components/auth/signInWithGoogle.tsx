@@ -1,17 +1,84 @@
 "use client";
 import { useTranslations } from "next-intl";
 import { Button } from "../ui/button";
+import { useEffect, useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { toast } from "sonner";
+import { LoadingIcon } from "../ui/icons";
 
 export default function SignInWithGoogle() {
   const t = useTranslations("common");
+  const { login } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    // This effect handles the communication from the pop-up window.
+    const handleMessage = (event: MessageEvent) => {
+      // Verify the origin for security (adjust to match your domain)
+      const allowedOrigin = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3100";
+      
+      if (event.origin !== allowedOrigin && !allowedOrigin.includes(event.origin)) {
+        console.warn("Received message from unauthorized origin:", event.origin);
+        return;
+      }
+      
+      if (
+        event.data &&
+        event.data.message === "Login successful" &&
+        event.data.token
+      ) {
+        setIsLoading(false);
+        login(null, event.data.token);
+        toast.success(t("loginSuccess"));
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("message", handleMessage);
+    };
+  }, [login, t]);
 
   const signInWithGoogle = () => {
-    window.open(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/google`, "_self");
+    setIsLoading(true);
+    const googleLoginUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/google`;
+    
+    // Open the popup centered in the screen
+    const width = 500;
+    const height = 600;
+    const left = window.screenX + (window.outerWidth - width) / 2;
+    const top = window.screenY + (window.outerHeight - height) / 2;
+    
+    const authPopup = window.open(
+      googleLoginUrl,
+      "authPopup",
+      `width=${width},height=${height},left=${left},top=${top},scrollbars=yes,resizable=yes`
+    );
+    
+    if (authPopup) {
+      const checkPopup = setInterval(() => {
+        if (authPopup.closed) {
+          clearInterval(checkPopup);
+          setIsLoading(false);
+        }
+      }, 1000);
+    } else {
+      // Popup was blocked
+      setIsLoading(false);
+      toast.error(t("popupBlocked"));
+    }
   };
-  
+
   return (
-    <Button onClick={signInWithGoogle} className="flex items-center gap-2">
+    <Button 
+      onClick={signInWithGoogle} 
+      className="flex items-center gap-2"
+      disabled={isLoading}
+    >
       <svg width="20" height="20" viewBox="0 0 24 24">
+        {/* SVG paths */}
         <path
           d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
           fill="#4285F4"
@@ -29,7 +96,7 @@ export default function SignInWithGoogle() {
           fill="#EA4335"
         />
       </svg>
-      {t("signInWithGoogle")}
+      {isLoading ? <LoadingIcon className="size-5 animate-spin" /> : t("signInWithGoogle")}
     </Button>
   );
 }
